@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Peer Tutoring Platform</title>
+    <style>
+        /* Flash message styles */
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Hide the course and year of study fields by default */
+        #course-field, #year-field {
+            display: none;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 50px;">
+
+    <div style="max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+        <h2 style="color: #333;">Sign Up</h2>
+        <p>Join our Peer Tutoring Platform!</p>
+
+        <!-- Flash Messages -->
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %} -->
+
+        <!-- Sign-Up Form -->
+        <form action="{{ url_for('sign_up') }}" method="post">
+            <label for="name" style="display: block; text-align: left;">Full Name:</label>
+            <input type="text" id="name" name="name" required 
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label for="email" style="display: block; text-align: left;">Email:</label>
+            <input type="email" id="email" name="email" required 
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label for="password" style="display: block; text-align: left;">Password:</label>
+            <input type="password" id="password" name="password" required 
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+            <label for="role" style="display: block; text-align: left;">I am a:</label>
+            <select id="role" name="role" required 
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;"
+                onchange="toggleFields()">
+                <option value="">Select Role</option>
+                <option value="student">Student</option>
+                <option value="tutor">Tutor</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <!-- Course Selection Field -->
+            <div id="course-field">
+                <label for="course" style="display: block; text-align: left;">Select Course:</label>
+                <select id="course" name="course" 
+                    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                    <option value="">Select Course</option>
+                    <option value="Higher Certificate in ICT">Higher Certificate in ICT</option>
+                    <option value="Diploma in ICT - Applications Development">Diploma in ICT - Applications Development</option>
+                    <option value="Diploma in ICT - Business Analysis">Diploma in ICT - Business Analysis</option>
+                    <option value="Bachelor of Technology - ICT">Bachelor of Technology - ICT</option>
+                    <option value="Advanced Diploma in ICT">Advanced Diploma in ICT</option>
+                </select>
+            </div>
+
+            <!-- Year of Study Field -->
+            <div id="year-field">
+                <label for="year" style="display: block; text-align: left;">Year of Study:</label>
+                <select id="year" name="year" 
+                    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                    <option value="">Select Year</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+
+            <button type="submit" 
+                style="width: 100%; padding: 10px; background-color: #2980b9; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Sign Up
+            </button>
+        </form>
+
+        <p style="margin-top: 10px;">Already have an account? <a href="{{ url_for('sign_in') }}">Sign in</a></p>
+    </div>
+
+    <script>
+        // Function to show/hide the course and year of study fields
+        function toggleFields() {
+            const roleField = document.getElementById("role");
+            const courseField = document.getElementById("course-field");
+            const yearField = document.getElementById("year-field");
+
+            // Show course and year fields only if "Student" is selected
+            if (roleField.value === "student") {
+                courseField.style.display = "block";
+                yearField.style.display = "block";
+            } else if (roleField.value === "tutor") {
+                courseField.style.display = "block";
+                yearField.style.display = "none"; // Hide year field for tutors
+            } else {
+                courseField.style.display = "none";
+                yearField.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
